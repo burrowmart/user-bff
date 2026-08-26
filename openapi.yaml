@@ -1,0 +1,31 @@
+openapi: 3.0.0
+paths:
+  /health:
+    get:
+      operationId: HealthController_check
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - health
+  /profile:
+    get:
+      operationId: ProfileController_getProfile
+      parameters: []
+      responses:
+        '200':
+          description: user-service profile + notification-service unread count, aggregated
+      tags:
+        - profile
+info:
+  title: User BFF API
+  description: >-
+    Thin REST aggregation BFF for the user-facing client. Aggregates user-service + notification-service; holds no
+    domain logic and no datastore.
+  version: 0.1.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas: {}
