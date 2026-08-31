@@ -12,8 +12,9 @@ result.
   parallel.
 - Forwards the caller's own Cognito credential (`cf-token` /
   `x-amzn-oidc-data` / `Authorization`) to both downstream calls — every
-  service in this platform independently verifies the JWT on every route, so
-  a BFF-to-service call without it would 401 in a real deployment.
+  service pod's Envoy PEP verifies the JWT on every route (the app guards
+  only extract identity), so a BFF-to-service call without it would be
+  denied in a real deployment.
 - No writes, no caching (v1), no saga/compensation knowledge.
 
 ### Request flow

@@ -15,8 +15,9 @@ export class ProfileService {
   // Fresh client per call: correlationId lives in AsyncLocalStorage and
   // changes per request, while createXServiceClient() bakes defaultHeaders in
   // at construction time. authHeaders forwards the caller's own credential —
-  // both downstream services independently verify the Cognito JWT (global
-  // guard), so a request arriving without it would 401 in a real deployment.
+  // both downstream Envoy PEP sidecars verify the Cognito JWT signature
+  // (the app guards only extract identity), so a request arriving without
+  // it would be denied in a real deployment.
   private userClient(authHeaders: Record<string, string>) {
     return createUserServiceClient({
       baseUrl: this.config.get<string>('userServiceUrl')!,

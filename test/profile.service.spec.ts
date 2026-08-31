@@ -51,7 +51,7 @@ describe('ProfileService', () => {
       expect.objectContaining({ email: 'alice@example.com', name: 'Alice', unreadNotifications: 3 }),
     );
     // Both downstream calls happened, and the caller's own credential was forwarded to each —
-    // both services independently verify the Cognito JWT (global guard).
+    // each callee's Envoy PEP verifies the JWT signature on every hop.
     expect(calls).toHaveLength(2);
     for (const [, init] of fetchMock.mock.calls) {
       expect((init.headers as Record<string, string>).authorization).toBe('Bearer tok');
